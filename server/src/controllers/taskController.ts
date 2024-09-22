@@ -25,3 +25,65 @@ export const getTasks = async (req: Request, res: Response): Promise<void> => {
       .json({ message: `Error retrieving tasks ${error.message}` });
   }
 };
+
+export const createTask = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const {
+    title,
+    description,
+    status,
+    priority,
+    tags,
+    dueDate,
+    points,
+    projectId,
+    authorUserId,
+    assignedUserId,
+    startDate,
+  } = req.body;
+  try {
+    const newTask = await prisma.task.create({
+      data: {
+        title,
+        description,
+        status,
+        priority,
+        tags,
+        dueDate: new Date(),
+        points,
+        projectId,
+        authorUserId,
+        assignedUserId,
+        startDate: new Date(),
+      },
+    });
+    res.status(201).json(newTask);
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ message: `Error while creating Task ${error.message}` });
+  }
+};
+
+export const updateTaskStatus = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { taskId } = req.params;
+  const { status } = req.body;
+  try {
+    const updatedTask = await prisma.task.update({
+      where: {
+        id: Number(taskId),
+      },
+      data: { status: status },
+    });
+    res.status(201).json(updatedTask);
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ message: `Error while updating Tasks ${error.message}` });
+  }
+};
