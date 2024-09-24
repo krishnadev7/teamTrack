@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsSidebarCollapsed } from "@/state";
 import { useState } from "react";
 import { setPriority } from "os";
+import { useGetProjectsQuery } from "@/state/api";
 
 
 
@@ -14,6 +15,8 @@ const Sidebar = () => {
     const [showPriorties, setShowPriorties] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     const isSidebarCollapsed = useAppSelector((state) => state.global.isSidebarCollapsed);
+
+    const { data: projects } = useGetProjectsQuery();
 
     return (
         <div className={`sidebarClassNames ${isSidebarCollapsed ? 'hidden w-0' : 'w-64'}`}>
@@ -67,6 +70,16 @@ const Sidebar = () => {
                         <ChevronUp className="h-5 w-5" />
                     ) : <ChevronDown className="h-5 w-5" />}
                 </button>
+
+                {/* Project List */}
+                {showProjects && projects?.map((project) => (
+                    <SidebarLinks
+                        key={project.id}
+                        icon={Briefcase}
+                        label={project.name}
+                        href={`/projects/${project.id}`}
+                    />
+                ))}
 
                 {/* Priorities Links */}
                 <button onClick={() => setShowPriorties(prev => !prev)} className="flex w-full items-center justify-between px-8 py-3 text-gray-500">
