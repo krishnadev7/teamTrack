@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import TaskCard from "@/components/TaskCard/Index";
 import { useGetTaskQuery } from "@/state/api";
 
 type ListViewProps = {
@@ -20,7 +21,10 @@ const ListView = ({ id, setIsModalNewTaskOpen }: ListViewProps) => {
     return (
         <div className="px-4 pb-8 xl:px-6">
             <div className="pt-5">
-                <Header name="List"/>
+                <Header name="List" />
+            </div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+                {tasks?.map((task) => <TaskCard key={task.id} task={task} />)}
             </div>
         </div>
     )
