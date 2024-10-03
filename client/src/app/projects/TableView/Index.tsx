@@ -42,33 +42,34 @@ const TableView = ({ id, setIsModalNewTaskOpen }: Props) => {
           }
         />
       </div>
-      <Table>
-        <TableHeader>
+      <Table className="bg-white dark:bg-dark-secondary shadow-lg rounded-md">
+        <TableHeader className="bg-gray-100 dark:bg-dark-tertiary">
           <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Priority</TableHead>
-            <TableHead>Tags</TableHead>
-            <TableHead>StartDate</TableHead>
-            <TableHead>DueDate</TableHead>
-            <TableHead>Author</TableHead>
-            <TableHead>Assignee</TableHead>
+            <TableHead className="dark:text-white">Title</TableHead>
+            <TableHead className="dark:text-white">Description</TableHead>
+            <TableHead className="dark:text-white">Status</TableHead>
+            <TableHead className="dark:text-white">Priority</TableHead>
+            <TableHead className="dark:text-white">Tags</TableHead>
+            <TableHead className="dark:text-white">StartDate</TableHead>
+            <TableHead className="dark:text-white">DueDate</TableHead>
+            <TableHead className="dark:text-white">Author</TableHead>
+            <TableHead className="dark:text-white">Assignee</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {tasks.map((task) => (
             <TableRow key={task.id}
+            className="hover:bg-gray-100 dark:hover:bg-dark-tertiary"
             >
-              <TableCell>{task.title}</TableCell>
-              <TableCell>{task.description}</TableCell>
-              <TableCell>{task.status}</TableCell>
-              <TableCell>{task.priority}</TableCell>
-              <TableCell>{task.tags}</TableCell>
-              <TableCell>{task.startDate}</TableCell>
-              <TableCell>{task.dueDate}</TableCell>
-              <TableCell>{task.author?.username ? task.author.username : "Unknown"}</TableCell>
-              <TableCell>{task.assignee?.username ? task.assignee.username : "Unassigned"}</TableCell>
+              <TableCell  className="dark:text-white">{task.title}</TableCell>
+              <TableCell  className="dark:text-white">{task.description}</TableCell>
+              <TableCell className="flex text-center justify-center rounded-full bg-green-100 mt-3 p-2 text-xs font-semibold text-green-800">{task.status}</TableCell>
+              <TableCell  className="dark:text-white">{task.priority}</TableCell>
+              <TableCell  className="dark:text-white">{task.tags}</TableCell>
+              <TableCell  className="dark:text-white">{task.startDate}</TableCell>
+              <TableCell  className="dark:text-white">{task.dueDate}</TableCell>
+              <TableCell  className="dark:text-white">{task.author?.username ? task.author.username : "Unknown"}</TableCell>
+              <TableCell  className="dark:text-white">{task.assignee?.username ? task.assignee.username : "Unassigned"}</TableCell>
             </TableRow>
           ))}
         </TableBody>
