@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.2",
+    "@mui/x-data-grid": "^7.19.0",
     "@reduxjs/toolkit": "^2.2.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
