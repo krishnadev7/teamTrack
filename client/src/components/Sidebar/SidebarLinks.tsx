@@ -14,10 +14,6 @@ interface SidebarLinkProps {
 const SidebarLinks = ({ href, icon: Icon, label }: SidebarLinkProps) => {
     const pathname = usePathname();
     const isActive = pathname === href || (pathname === "/" && href === "/dashboard");
-    const screenWidth = window.innerWidth;
-
-    const dispatch = useAppDispatch();
-    const isSidebarCollapsed = useAppSelector((state) => state.global.isSidebarCollapsed);
 
     return (
         <Link href={href} className="w-full">

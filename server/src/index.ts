@@ -23,10 +23,6 @@ app.use(cors());
 
 // Routes
 
-app.get("/", (req, res) => {
-  res.send("This is home route");
-});
-
 app.use("/projects", projectRoutes);
 app.use("/tasks", taskRoutes);
 app.use("/search", searchRoutes);

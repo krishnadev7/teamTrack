@@ -25,9 +25,6 @@ app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use((0, cors_1.default)());
 // Routes
-app.get("/", (req, res) => {
-    res.send("This is home route");
-});
 app.use("/projects", projectRoutes_1.default);
 app.use("/tasks", taskRoutes_1.default);
 app.use("/search", searchRoutes_1.default);
