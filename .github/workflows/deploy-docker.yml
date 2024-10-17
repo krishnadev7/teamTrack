@@ -28,3 +28,15 @@ jobs:
         run: |
           docker build -t krishnadev7/teamtrack-server:latest ./server
           docker push krishnadev7/teamtrack-server:latest
+
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull krishnadev7/teamtrack-server:latest
+            docker stop teamtrack-server || true
+            docker rm teamtrack-server || true
+            docker run -d --name teamtrack-server -p 80:8000 krishnadev7/teamtrack-server:latest
