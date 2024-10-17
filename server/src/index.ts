@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get('/', (req,res) => {
-  res.send("TeamTrack server is up and running");
+  res.send(`TeamTrack server is up and running on port:${port}`);
 })
 
 // Routes
