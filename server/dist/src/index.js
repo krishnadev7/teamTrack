@@ -25,7 +25,7 @@ app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use((0, cors_1.default)());
 app.get('/', (req, res) => {
-    res.send(`TeamTrack ec2 server is up and running on port:${port}`);
+    res.send(`TeamTrack server is up and running on port:${port}`);
 });
 // Routes
 app.use("/projects", projectRoutes_1.default);

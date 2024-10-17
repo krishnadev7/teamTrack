@@ -29,6 +29,10 @@ jobs:
           docker build -t krishnadev7/teamtrack-server:latest ./server
           docker push krishnadev7/teamtrack-server:latest
 
+      - name: Inspect Docker image
+        run: |
+            docker run --rm krishnadev7/teamtrack-server:latest ls -la /app/dist
+
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v0.1.8
         with:
