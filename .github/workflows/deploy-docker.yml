@@ -29,18 +29,12 @@ jobs:
           docker build -t krishnadev7/teamtrack-server:latest ./server
           docker push krishnadev7/teamtrack-server:latest
 
-      - name: Set RUN_SEED variable
-          # Set the seed flag here; change to "false" if not needed
-        run: echo "RUN_SEED=true" >> $GITHUB_ENV
-
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
-          envs:  # Pass environment variables explicitly to the script
-          RUN_SEED: ${{ env.RUN_SEED }}
           script: |
             docker pull krishnadev7/teamtrack-server:latest
             docker stop teamtrack-server || true
@@ -48,11 +42,13 @@ jobs:
 
             docker run --rm -e DATABASE_URL=${{ secrets.DATABASE_URL }} krishnadev7/teamtrack-server:latest npx prisma migrate deploy
 
-            if [ "${RUN_SEED}" = "true" ]; then
-              echo "Running seed..."
+            if [ ! -f "/var/app/seed_ran" ]; then
+              echo "Running seed for the first time..."
               docker run --rm -e DATABASE_URL=${{ secrets.DATABASE_URL }} krishnadev7/teamtrack-server:latest npm run seed
+              # Create a flag file to indicate that seeding is done
+              touch /var/app/seed_ran
             else
-            echo "Skipping seed."
+              echo "Skipping seed. It has already run."
             fi
 
             docker run -d --name teamtrack-server -p 80:8000 -e DATABASE_URL=${{ secrets.DATABASE_URL }} krishnadev7/teamtrack-server:latest
