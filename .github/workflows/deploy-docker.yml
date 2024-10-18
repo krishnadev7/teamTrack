@@ -29,10 +29,6 @@ jobs:
           docker build -t krishnadev7/teamtrack-server:latest ./server
           docker push krishnadev7/teamtrack-server:latest
 
-      - name: Inspect Docker image
-        run: |
-            docker run --rm krishnadev7/teamtrack-server:latest ls -la /app/dist
-
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v0.1.8
         with:
@@ -43,4 +39,4 @@ jobs:
             docker pull krishnadev7/teamtrack-server:latest
             docker stop teamtrack-server || true
             docker rm teamtrack-server || true
-            docker run -d --name teamtrack-server -p 80:8000 krishnadev7/teamtrack-server:latest
+            docker run -d --name teamtrack-server -p 80:8000 -e DATABASE_URL=${{ secrets.DATABASE_URL }} krishnadev7/teamtrack-server:latest

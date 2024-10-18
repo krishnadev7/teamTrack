@@ -1,32 +1,26 @@
+# Use Node.js version 20
+FROM node:20
 
-# Build stage
-FROM node:18-alpine AS builder
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
-WORKDIR /app
-
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
+# Install project dependencies
 RUN npm install
 
-COPY src/ ./src/
+# Copy the rest of the application code
+COPY . .
 
-COPY tsconfig.json ./
+# Generate Prisma client
+RUN npx prisma generate
 
+# Build TypeScript code
 RUN npm run build
 
-# Production stage
-FROM node:18-alpine
-
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN npm install --only=production
-
-COPY --from=builder /app/dist ./dist
-
+# Expose the correct port (8000)
 EXPOSE 8000
 
-ENV NODE_ENV=production
-
-CMD ["node", "dist/index.js"]
+# Command to run the application
+CMD ["node", "dist/src/index.js"]
