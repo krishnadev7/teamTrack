@@ -39,6 +39,8 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
+          envs:  # Pass environment variables explicitly to the script
+          RUN_SEED: ${{ env.RUN_SEED }}
           script: |
             docker pull krishnadev7/teamtrack-server:latest
             docker stop teamtrack-server || true
