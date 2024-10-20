@@ -51,12 +51,12 @@ export const createTask = async (
         status,
         priority,
         tags,
-        dueDate: new Date(),
+        dueDate,
         points,
         projectId,
         authorUserId,
         assignedUserId,
-        startDate: new Date(),
+        startDate,
       },
     });
     res.status(201).json(newTask);

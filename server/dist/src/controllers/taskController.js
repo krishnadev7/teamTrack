@@ -45,12 +45,12 @@ const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 status,
                 priority,
                 tags,
-                dueDate: new Date(),
+                dueDate,
                 points,
                 projectId,
                 authorUserId,
                 assignedUserId,
-                startDate: new Date(),
+                startDate,
             },
         });
         res.status(201).json(newTask);

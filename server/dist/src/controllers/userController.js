@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = void 0;
+exports.postUser = exports.getUser = exports.getUsers = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -18,7 +18,46 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(users);
     }
     catch (error) {
-        res.status(500).json({ message: `Error while retreiving tasks ${error.message}` });
+        res
+            .status(500)
+            .json({ message: `Error while retreiving tasks ${error.message}` });
     }
 });
 exports.getUsers = getUsers;
+const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { cognitoId } = req.params;
+    try {
+        const user = yield prisma.user.findUnique({
+            where: {
+                cognitoId: cognitoId,
+            },
+        });
+        res.json(user);
+    }
+    catch (error) {
+        res
+            .status(500)
+            .json({ message: `Error retrieving user: ${error.message}` });
+    }
+});
+exports.getUser = getUser;
+const postUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { username, cognitoId, profilePictureUrl = "i1.jpg", teamId = 1, } = req.body;
+        const newUser = yield prisma.user.create({
+            data: {
+                username,
+                cognitoId,
+                profilePictureUrl,
+                teamId,
+            },
+        });
+        res.json({ message: "User created Successfully", newUser });
+    }
+    catch (error) {
+        res
+            .status(500)
+            .json({ message: `Error while creating user ${error.message}` });
+    }
+});
+exports.postUser = postUser;

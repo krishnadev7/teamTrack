@@ -73,10 +73,18 @@ const PriorityWrapper = ({ priority }: Props) => {
     const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
 
     const { data: currentUser } = useGetAuthUserQuery({});
-    const userId = currentUser?.userDetails?.userId ?? null;
+    console.log(currentUser);
+
+    console.log(currentUser?.user.userId);
+    
+    const userId = Number(currentUser?.user.userId);
+    
+    // const userId = currentUser?.userDetails?.userId ?? null;    
+
+    
 
     const { data: tasks, isLoading, isError: isTaskError } = useGetTasksByUserQuery(userId || 0,
-        { skip: userId === null })
+        { skip: userId === null })        
 
     const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 

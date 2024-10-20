@@ -18,7 +18,7 @@ const Project = ({ params }: Props) => {
     const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
     return (
         <div>
-            <ModalNewTask isOpen={isModalNewTaskOpen} onClose={() => setIsModalNewTaskOpen(false)} id={Number(id)} />
+            <ModalNewTask isOpen={isModalNewTaskOpen} onClose={() => setIsModalNewTaskOpen(false)} id={id} />
             <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab} />
             {activeTab === 'Board' && (
                 <BoardView id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
